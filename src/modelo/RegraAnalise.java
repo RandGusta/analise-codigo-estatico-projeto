@@ -7,4 +7,5 @@ public class RegraAnalise {
     public RegraAnalise(int quantidadeMaxParametros){
         this.quantidadeMaxParametros = quantidadeMaxParametros;
     }
+
 }
