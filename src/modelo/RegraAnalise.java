@@ -9,6 +9,8 @@ public class RegraAnalise {
     }
 
 
+    // pesquisar sobre Exoressão Regular
+    // corrigir quando so tem uma aparição
     public int verificarQuantidadeParametros(String arquivo){
         int cont = 0;
         if(arquivo.contains("function")){
@@ -29,6 +31,8 @@ public class RegraAnalise {
                     for(int i=0; i<parametrosChar.length; i++){
                         if(String.valueOf(parametrosChar[i]).equals(",")){
                             cont++;
+                        } else {
+                            cont = -1;
                         }
 
                     }
