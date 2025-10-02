@@ -7,7 +7,12 @@ public class Projeto {
         private ArquivoCodigo arquivo;
 
 
+    public Projeto(String nome, String caminho, ArquivoCodigo arquivo){
+        this.nome = nome;
+        this.caminho = caminho;
+        this.arquivo = arquivo;
 
+    }
 
         public void adicionarArquivo(ArquivoCodigo arquivo){
             return;
