@@ -16,9 +16,6 @@ public class FuncoesUteis {
             System.out.println("caminho NÃO encontrado");
         }
     }
-
-
-
     public static String lerArquivoComoString(String caminho){
         try{
             return Files.readString(Paths.get(caminho));

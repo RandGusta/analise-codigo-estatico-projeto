@@ -8,12 +8,12 @@ public class Projeto {
         private List<ArquivoCodigo> arquivo;
 
 
-    public Projeto(String nome, String caminho, ArquivoCodigo arquivo){
-        this.nome = nome;
-        this.caminho = caminho;
-        this.arquivo = arquivo;
-
-    }
+//    public Projeto(String nome, String caminho, ArquivoCodigo arquivo){
+//        this.nome = nome;
+//        this.caminho = caminho;
+//        this.arquivo = arquivo;
+//
+//    }
 
         public void adicionarArquivo(ArquivoCodigo arquivo){
             return;
