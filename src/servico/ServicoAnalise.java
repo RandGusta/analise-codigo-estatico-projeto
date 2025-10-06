@@ -6,7 +6,7 @@ import java.util.regex.Pattern;
 
 public class ServicoAnalise {
 
-    function\s+([a-zA-Z0-9_]+)\s*\((.*\))    public void verificarQuantidadeParametros(String arquivoString){
+    public void verificarQuantidadeParametros(String arquivoString){
         //Pattern padrao = Pattern.compile("sua_regex_aqui");
         //Matcher matcher = padrao.matcher(texto);
         Pattern padraoFunca = Pattern.compile("");
