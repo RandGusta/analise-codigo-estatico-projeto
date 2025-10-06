@@ -7,6 +7,6 @@ public class Main {
 
         FuncoesUteis.verificarCaminho("C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\arquivoteste.txt");
         String arquivo = FuncoesUteis.lerArquivoComoString("C:\\Users\\gusta\\OneDrive\\Área de Trabalho\\arquivoteste.txt");
-        servicoAnalise.contarFuncoes(arquivo);
+        servicoAnalise.verificarQuantidadeParametros(arquivo);
     }
 }
