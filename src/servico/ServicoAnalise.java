@@ -1,9 +1,7 @@
 package servico;
 
-import modelo.TipoDeclaracao;
-import modelo.TipoDeclaracaoJS;
+import modelo.tipoDeclaracao.TipoDeclaracaoJS;
 
-import javax.swing.plaf.multi.MultiPopupMenuUI;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

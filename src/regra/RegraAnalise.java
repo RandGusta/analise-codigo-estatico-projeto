@@ -5,6 +5,6 @@ import modelo.Ocorrencia;
 import java.util.List;
 public interface RegraAnalise {
 
-    List<Ocorrencia> analisar(ArquivoCodigo arquivo);
+   List<Ocorrencia> aplicar(ArquivoCodigo arquivoCodigo);
 
 }

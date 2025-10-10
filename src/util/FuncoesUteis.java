@@ -18,6 +18,7 @@ public class FuncoesUteis {
         }
         return false;
     }
+
     public static String lerArquivoComoString(String caminho){
         try{
             return Files.readString(Paths.get(caminho));
