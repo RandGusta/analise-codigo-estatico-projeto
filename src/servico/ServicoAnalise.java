@@ -1,63 +1,39 @@
 package servico;
 
+import modelo.TipoDeclaracao;
+import modelo.TipoProblema;
 import modelo.tipoDeclaracao.TipoDeclaracaoJS;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 public class ServicoAnalise {
 
-    public void verificarQuantidadeParametros(String arquivoString) {
-        // for para percorrer os enums
-        for (TipoDeclaracaoJS tipo : TipoDeclaracaoJS.values()) {
-            Pattern padrao = tipo.getPadrao();
-            Matcher matcher = padrao.matcher(arquivoString);
-            while (matcher.find()) {
-
-                if (matcher.groupCount() >= 2) {
-                    String nome = matcher.group(1);
-                    String parametros = matcher.group(2);
-                    String[] vetorParamtros = parametros.split(",");
-                    int cont = 0;
-                    for (String p : vetorParamtros) {
-                        if (!p.trim().isEmpty()) cont++;
-                    }
-
-                    if(cont > 10){ // Vai mudar --> pegar base de uma fonte
-                        System.out.println("A função " + matcher.group() + " tem " + cont + " parâmetros \n" + (cont  - 10) + " a mais que o recomendado");
-                    }
-
-
-                }
-            }
-        }
+    // Retorna um matcher para todas as funções do código JS
+    public Matcher obterFuncoes(String codigo, TipoDeclaracaoJS tipo) {
+        Pattern padrao = tipo.getPadrao();
+        return padrao.matcher(codigo);
     }
 
 
-    public void verificarTamanhoNomeFuncao(String arquivoString){
-        for (TipoDeclaracaoJS tipo : TipoDeclaracaoJS.values()) {
-            Pattern padrao = tipo.getPadrao();
-            Matcher matcher = padrao.matcher(arquivoString);
-            while (matcher.find()) {
-
-                if (matcher.groupCount() >= 1) {
-                    String nome = matcher.group(1);
-                    int cont = nome.length();
-                if (cont > 50) {  // Vai mudar --> pegar base de uma fonte
-                    System.out.println("a função " + nome + " possui " + cont + " caractéres em seu nome oque ultrapassa o recomendado");
-                }
-            }
-
+    public int contarParametros(String parametros) {
+        if (parametros == null || parametros.isBlank()) return 0;
+        String[] vetor = parametros.split(",");
+        int cont = 0;
+        for (String p : vetor) {
+            if (!p.trim().isEmpty()) cont++;
         }
-
-
-
+        return cont;
     }
 
 
+    public int contarLinhas(String codigo) {
+        return codigo.split("\r?\n").length;
+    }
 
-
-
+    // Pega o nome da função se ela for do tipo tradicional
+    public String extrairNome(Matcher matcher, TipoDeclaracaoJS tipo) {
+        return tipo.extrairNome(matcher);
+    }
 }
-}
+

@@ -9,10 +9,10 @@ public class ArquivoCodigo {
     private String conteudo;
     private List<Ocorrencia> ocorrencias;
 
-    public ArquivoCodigo(String nome, TipoLinguagem tipoLinguagem){
+    public ArquivoCodigo(String nome, TipoLinguagem tipoLinguagem, String conteudo){
         this.nome = nome;
         this.tipoLinguagem = tipoLinguagem;
-
+        this.conteudo = conteudo;
     }
 
     public String getConteudo(){
