@@ -2,6 +2,8 @@ package servico;
 
 import modelo.TipoDeclaracao;
 import modelo.TipoProblema;
+import modelo.comentariosCodigo.ComentarioJS;
+import modelo.estruturasDecisao.EstruturaDecisaoJs;
 import modelo.tipoDeclaracao.TipoDeclaracaoJS;
 
 import java.util.regex.Matcher;
@@ -9,7 +11,7 @@ import java.util.regex.Pattern;
 
 public class ServicoAnalise {
 
-    // Retorna um matcher para todas as funções do código JS
+
     public Matcher obterFuncoes(String codigo, TipoDeclaracaoJS tipo) {
         Pattern padrao = tipo.getPadrao();
         return padrao.matcher(codigo);
@@ -26,14 +28,17 @@ public class ServicoAnalise {
         return cont;
     }
 
-
-    public int contarLinhas(String codigo) {
-        return codigo.split("\r?\n").length;
+    public Matcher obterComentario(String codigo, ComentarioJS comentarioJS){
+        Pattern pattern = comentarioJS.getPadrao();
+        return pattern.matcher(codigo);
     }
 
-    // Pega o nome da função se ela for do tipo tradicional
-    public String extrairNome(Matcher matcher, TipoDeclaracaoJS tipo) {
-        return tipo.extrairNome(matcher);
+
+    public Matcher obterEstruturaDecisao(String codigo, EstruturaDecisaoJs estruturaDecisaoJs){
+        Pattern pattern = estruturaDecisaoJs.getPadrao();
+        return pattern.matcher(codigo);
     }
+
+
 }
 

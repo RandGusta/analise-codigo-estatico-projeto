@@ -1,10 +1,26 @@
 package modelo;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "Ocorrencia")
 public class Ocorrencia {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String id;
+
+    @Column(name = "nome_arquivo")
     private String nomeArquivo;
+
+    @Column(name = "nome_funcao")
     private String nomeFuncao; // temporario
+
+    @Column(name = "linha")
     private int linha;
+
+    @Column(name = "tipo_problema")
     private String tipoProblema;
+
+    @Column(name = "descricao")
     private String descricao;
 
     public Ocorrencia(String tipoProblema, String nomeArquivo, int linha, String descricao, String nomeFuncao){

@@ -26,11 +26,12 @@ public class RegraTamanhoNomeJS implements RegraAnalise {
             Matcher matcher = servicoAnalise.obterFuncoes(codigo, tipo);
 
             while(matcher.find()){
+
                 if(matcher.groupCount() >= 1){
-                    String nome = servicoAnalise.extrairNome(matcher, tipo);
+                    String nome = matcher.group(1);
                     int linha = codigo.substring(0, matcher.start()).split("\n").length;
-                    if(nome.length() > 50){
-                        TipoProblema problema = TipoProblema.QTD_PARAMETROS_EXECIDA;
+                    if(nome.length() > 10){
+                        TipoProblema problema = TipoProblema.NOME_FUNCAO_LONGO;
                         Ocorrencia ocorrencia = new Ocorrencia(problema.getCodigo(), arquivo.getNome(), linha, problema.getDescricao(), matcher.group(1));
                         ocorrencias.add(ocorrencia);
                     }
