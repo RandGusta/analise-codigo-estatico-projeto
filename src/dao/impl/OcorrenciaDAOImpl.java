@@ -14,7 +14,7 @@ public class OcorrenciaDAOImpl implements OcorrenciaDAO {
 
     @Override
     public void inserir(Ocorrencia ocorrencia){
-        String
+
 
 
 

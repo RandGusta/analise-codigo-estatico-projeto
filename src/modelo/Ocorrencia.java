@@ -2,11 +2,11 @@ package modelo;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Ocorrencia")
+@Table(name = "ocorrencia")
 public class Ocorrencia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String id;
+    private Long id;
 
     @Column(name = "nome_arquivo")
     private String nomeArquivo;
@@ -30,6 +30,8 @@ public class Ocorrencia {
         this.descricao = descricao;
         this.nomeFuncao = nomeFuncao; // temporariamente
     }
+
+    public Ocorrencia(){}
 
     public int getLinha() {
         return linha;
