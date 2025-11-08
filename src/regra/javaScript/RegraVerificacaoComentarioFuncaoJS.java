@@ -29,24 +29,26 @@ public class RegraVerificacaoComentarioFuncaoJS implements RegraAnalise {
                 int linha = conteudo.substring(0, matcherFuncao.start()).split("\n").length;
 
                 String trechoFuncao = conteudo.substring(inicioFuncao, fimFuncao);
-                int indiceAnteriorFuncao = conteudo.lastIndexOf("\n",inicioFuncao -1);
-                if(indiceAnteriorFuncao != -1){
-                    int indiceLinhaAnteriorFuncao = conteudo.lastIndexOf("\n", indiceAnteriorFuncao-1);
-                    if(indiceLinhaAnteriorFuncao == -1) {
+                int indiceAnteriorFuncao = conteudo.lastIndexOf("\n", inicioFuncao - 1);
+                if (indiceAnteriorFuncao != -1) {
+                    int indiceLinhaAnteriorFuncao = conteudo.lastIndexOf("\n", indiceAnteriorFuncao - 1);
+                    if (indiceLinhaAnteriorFuncao == -1) {
                         indiceLinhaAnteriorFuncao = 0;
 
                     }
                     String linhaAnterior = conteudo.substring(indiceLinhaAnteriorFuncao, indiceAnteriorFuncao);
-                    for(ComentarioJS comentarioJS : ComentarioJS.values()){
+                    for (ComentarioJS comentarioJS : ComentarioJS.values()) {
                         Matcher matcherComentarioAntes = servicoAnalise.obterComentario(linhaAnterior, comentarioJS);
 
-                        if(!matcherComentarioAntes.find()){
+                        // TODO: RESOLVER PROBLEMA DE MULTIPLAS APARIÇÕES (ANALISAR AS FUNÇÕES VERIFICANDO O ENUMs DE 1 VEZ)
+
+                        if (!matcherComentarioAntes.find()) {
                             TipoProblema tipoProblema = TipoProblema.FUNCAO_SEM_COMENTARIO;
                             Ocorrencia ocorrencia = new Ocorrencia(tipoProblema.getCodigo(), arquivoCodigo.getNome(), linha, tipoProblema.getDescricao(), matcherFuncao.group(1));
                         }
                     }
                 }
-                }
+
                 for (ComentarioJS comentarioJS : ComentarioJS.values()) {
                     Matcher matcherComentarioEntre = servicoAnalise.obterComentario(trechoFuncao, comentarioJS);
 
@@ -59,6 +61,8 @@ public class RegraVerificacaoComentarioFuncaoJS implements RegraAnalise {
                 }
             }
 
+
+        }
         return ocorrencias;
     }
 }
