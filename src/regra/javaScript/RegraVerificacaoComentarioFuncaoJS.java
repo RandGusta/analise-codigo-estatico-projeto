@@ -32,7 +32,10 @@ public class RegraVerificacaoComentarioFuncaoJS implements RegraAnalise {
                 int indiceAnteriorFuncao = conteudo.lastIndexOf("\n",inicioFuncao -1);
                 if(indiceAnteriorFuncao != -1){
                     int indiceLinhaAnteriorFuncao = conteudo.lastIndexOf("\n", indiceAnteriorFuncao-1);
-                    if(indiceLinhaAnteriorFuncao != -1){
+                    if(indiceLinhaAnteriorFuncao == -1) {
+                        indiceLinhaAnteriorFuncao = 0;
+
+                    }
                     String linhaAnterior = conteudo.substring(indiceLinhaAnteriorFuncao, indiceAnteriorFuncao);
                     for(ComentarioJS comentarioJS : ComentarioJS.values()){
                         Matcher matcherComentarioAntes = servicoAnalise.obterComentario(linhaAnterior, comentarioJS);
@@ -55,7 +58,6 @@ public class RegraVerificacaoComentarioFuncaoJS implements RegraAnalise {
 
                 }
             }
-        }
 
         return ocorrencias;
     }
