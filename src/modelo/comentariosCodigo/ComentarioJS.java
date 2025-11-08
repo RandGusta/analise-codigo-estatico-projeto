@@ -4,7 +4,8 @@ import java.util.regex.Pattern;
 
 public enum ComentarioJS {
     COMENTARIO_PADRAO("//.*"),
-    COMENTARIO_BLOCO("/\\*[\\s\\S]*?\\*/");
+    COMENTARIO_BLOCO("/\\*[\\s\\S]*?\\*/"),
+    FIM_BLOCO("\\*/");
     private final Pattern padrao;
 
 

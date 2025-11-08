@@ -3,21 +3,47 @@ package dao.impl;
 import dao.OcorrenciaDAO;
 import modelo.Ocorrencia;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.sql.Connection;
+import java.util.List;
 
 public class OcorrenciaDAOImpl implements OcorrenciaDAO {
-    private Connection conexao;
+    private EntityManager em;
 
-    public OcorrenciaDAOImpl(Connection conexao){
-        this.conexao = conexao;
+    public OcorrenciaDAOImpl(EntityManager em ){
+        this.em = em;
     }
 
     @Override
     public void inserir(Ocorrencia ocorrencia){
-
-
-
-
+    em.getTransaction().begin();
+    em.persist(ocorrencia);
+    em.getTransaction().commit();
     }
+
+
+    @Override
+    public Ocorrencia acharPorID(Long ID){
+       return em.find(Ocorrencia.class, ID);
+    }
+
+    @Override
+    public void deletar(Long ID){
+        em.getTransaction().begin();
+        Ocorrencia ocorrencia = em.find(Ocorrencia.class, ID);
+        if(ocorrencia != null){
+            em.remove(ocorrencia);
+        }
+        em.getTransaction().commit();
+    }
+
+    @Override
+    public List<Ocorrencia> listar(){
+        Query query = em.createQuery("SELECT o FROM ocorrencia o");
+        List<Ocorrencia> lista = query.getResultList();
+        return lista;
+    }
+
 
 }

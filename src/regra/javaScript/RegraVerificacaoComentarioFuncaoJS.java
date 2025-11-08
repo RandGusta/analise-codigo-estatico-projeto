@@ -16,24 +16,38 @@ public class RegraVerificacaoComentarioFuncaoJS implements RegraAnalise {
     ServicoAnalise servicoAnalise = new ServicoAnalise();
 
     @Override
-    public List<Ocorrencia> aplicar(ArquivoCodigo arquivoCodigo){
+    public List<Ocorrencia> aplicar(ArquivoCodigo arquivoCodigo) {
         List<Ocorrencia> ocorrencias = new ArrayList<>();
         String conteudo = arquivoCodigo.getConteudo();
 
-        for(TipoDeclaracaoJS tipo : TipoDeclaracaoJS.values()){
+        for (TipoDeclaracaoJS tipo : TipoDeclaracaoJS.values()) {
             Matcher matcherFuncao = servicoAnalise.obterFuncoes(conteudo, tipo);
 
-            while(matcherFuncao.find()){
+            while (matcherFuncao.find()) {
                 int inicioFuncao = matcherFuncao.start();
                 int fimFuncao = matcherFuncao.end();
                 int linha = conteudo.substring(0, matcherFuncao.start()).split("\n").length;
 
                 String trechoFuncao = conteudo.substring(inicioFuncao, fimFuncao);
-                for(ComentarioJS comentarioJS : ComentarioJS.values()) {
-                    Matcher matcherComentario = servicoAnalise.obterComentario(trechoFuncao, comentarioJS);
+                int indiceAnteriorFuncao = conteudo.lastIndexOf("\n",inicioFuncao -1);
+                if(indiceAnteriorFuncao != -1){
+                    int indiceLinhaAnteriorFuncao = conteudo.lastIndexOf("\n", indiceAnteriorFuncao-1);
+                    if(indiceLinhaAnteriorFuncao != -1){
+                    String linhaAnterior = conteudo.substring(indiceLinhaAnteriorFuncao, indiceAnteriorFuncao);
+                    for(ComentarioJS comentarioJS : ComentarioJS.values()){
+                        Matcher matcherComentarioAntes = servicoAnalise.obterComentario(linhaAnterior, comentarioJS);
 
-                    if(!matcherComentario.find()){
-                        System.out.println("entreou no if comentario");
+                        if(!matcherComentarioAntes.find()){
+                            TipoProblema tipoProblema = TipoProblema.FUNCAO_SEM_COMENTARIO;
+                            Ocorrencia ocorrencia = new Ocorrencia(tipoProblema.getCodigo(), arquivoCodigo.getNome(), linha, tipoProblema.getDescricao(), matcherFuncao.group(1));
+                        }
+                    }
+                }
+                }
+                for (ComentarioJS comentarioJS : ComentarioJS.values()) {
+                    Matcher matcherComentarioEntre = servicoAnalise.obterComentario(trechoFuncao, comentarioJS);
+
+                    if (!matcherComentarioEntre.find()) {
                         TipoProblema tipoProblema = TipoProblema.FUNCAO_SEM_COMENTARIO;
                         Ocorrencia ocorrencia = new Ocorrencia(tipoProblema.getCodigo(), arquivoCodigo.getNome(), linha, tipoProblema.getDescricao(), matcherFuncao.group(1));
                         ocorrencias.add(ocorrencia);

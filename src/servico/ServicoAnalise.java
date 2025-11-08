@@ -28,9 +28,9 @@ public class ServicoAnalise {
         return cont;
     }
 
-    public Matcher obterComentario(String codigo, ComentarioJS comentarioJS){
+    public Matcher obterComentario(String conteudo, ComentarioJS comentarioJS){
         Pattern pattern = comentarioJS.getPadrao();
-        return pattern.matcher(codigo);
+        return pattern.matcher(conteudo);
     }
 
 
