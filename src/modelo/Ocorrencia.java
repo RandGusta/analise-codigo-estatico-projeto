@@ -8,7 +8,8 @@ public class Ocorrencia {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nome_arquivo")
+    @ManyToOne
+    @JoinColumn(name = "arquivo_codigo_id")
     private String nomeArquivo;
 
     @Column(name = "nome_funcao")

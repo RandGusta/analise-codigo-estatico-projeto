@@ -23,6 +23,7 @@ public class RegraVerificacaoComentarioFuncaoJS implements RegraAnalise {
         for (TipoDeclaracaoJS tipo : TipoDeclaracaoJS.values()) {
             Matcher matcherFuncao = servicoAnalise.obterFuncoes(conteudo, tipo);
 
+            // TODO: verificar depois function dentro de function
             while (matcherFuncao.find()) {
                 int inicioFuncao = matcherFuncao.start();
                 int fimFuncao = matcherFuncao.end();
@@ -34,35 +35,30 @@ public class RegraVerificacaoComentarioFuncaoJS implements RegraAnalise {
                     int indiceLinhaAnteriorFuncao = conteudo.lastIndexOf("\n", indiceAnteriorFuncao - 1);
                     if (indiceLinhaAnteriorFuncao == -1) {
                         indiceLinhaAnteriorFuncao = 0;
-
                     }
                     String linhaAnterior = conteudo.substring(indiceLinhaAnteriorFuncao, indiceAnteriorFuncao);
+                    boolean temComentario = false;
+
                     for (ComentarioJS comentarioJS : ComentarioJS.values()) {
                         Matcher matcherComentarioAntes = servicoAnalise.obterComentario(linhaAnterior, comentarioJS);
+                        Matcher matcherComentarioEntre = servicoAnalise.obterComentario(trechoFuncao, comentarioJS);
 
-                        // TODO: RESOLVER PROBLEMA DE MULTIPLAS APARIÇÕES (ANALISAR AS FUNÇÕES VERIFICANDO O ENUMs DE 1 VEZ)
-
-                        if (!matcherComentarioAntes.find()) {
-                            TipoProblema tipoProblema = TipoProblema.FUNCAO_SEM_COMENTARIO;
-                            Ocorrencia ocorrencia = new Ocorrencia(tipoProblema.getCodigo(), arquivoCodigo.getNome(), linha, tipoProblema.getDescricao(), matcherFuncao.group(1));
+                        if (matcherComentarioAntes.find() || matcherComentarioEntre.find()) {
+                            temComentario = true;
+                            break;
                         }
                     }
-                }
 
-                for (ComentarioJS comentarioJS : ComentarioJS.values()) {
-                    Matcher matcherComentarioEntre = servicoAnalise.obterComentario(trechoFuncao, comentarioJS);
-
-                    if (!matcherComentarioEntre.find()) {
+                    if (!temComentario) {
                         TipoProblema tipoProblema = TipoProblema.FUNCAO_SEM_COMENTARIO;
-                        Ocorrencia ocorrencia = new Ocorrencia(tipoProblema.getCodigo(), arquivoCodigo.getNome(), linha, tipoProblema.getDescricao(), matcherFuncao.group(1));
+                        Ocorrencia ocorrencia = new Ocorrencia(tipoProblema.getCodigo(), arquivoCodigo.getNome(),linha, tipoProblema.getDescricao(), matcherFuncao.group(1)
+                        );
                         ocorrencias.add(ocorrencia);
                     }
-
                 }
             }
-
-
         }
+
         return ocorrencias;
     }
 }
