@@ -30,7 +30,7 @@ public class RegraQuantidadeParametrosJS implements RegraAnalise {
                     int linha = conteudo.substring(0, matcher.start()).split("\n").length;
                     if(quantidadeParamatros > 5){
                         TipoProblema tipoProblema = TipoProblema.QTD_PARAMETROS_EXECIDA;
-                        Ocorrencia ocorrencia = new Ocorrencia(tipoProblema.getCodigo(), arquivoCodigo.getNome(), linha, tipoProblema.getDescricao(), matcher.group(1));
+                        Ocorrencia ocorrencia = new Ocorrencia(tipoProblema.getCodigo(), arquivoCodigo, linha, tipoProblema.getDescricao(), matcher.group(1));
                         ocorrencias.add(ocorrencia);
                     }
 

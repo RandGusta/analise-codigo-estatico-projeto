@@ -51,7 +51,7 @@ public class RegraVerificacaoComentarioFuncaoJS implements RegraAnalise {
 
                     if (!temComentario) {
                         TipoProblema tipoProblema = TipoProblema.FUNCAO_SEM_COMENTARIO;
-                        Ocorrencia ocorrencia = new Ocorrencia(tipoProblema.getCodigo(), arquivoCodigo.getNome(),linha, tipoProblema.getDescricao(), matcherFuncao.group(1)
+                        Ocorrencia ocorrencia = new Ocorrencia(tipoProblema.getCodigo(), arquivoCodigo,linha, tipoProblema.getDescricao(), matcherFuncao.group(1)
                         );
                         ocorrencias.add(ocorrencia);
                     }

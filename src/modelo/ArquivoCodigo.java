@@ -23,7 +23,7 @@ public class ArquivoCodigo {
     @JoinColumn(name = "id_projeto")
     private Projeto projeto;
 
-    @OneToMany(mappedBy = "arquivo_codigo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "arquivoCodigo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Ocorrencia> ocorrencias;
 
     @Column(name="caminho")

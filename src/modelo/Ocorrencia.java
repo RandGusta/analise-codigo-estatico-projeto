@@ -10,7 +10,7 @@ public class Ocorrencia {
 
     @ManyToOne
     @JoinColumn(name = "arquivo_codigo_id")
-    private String nomeArquivo;
+    private ArquivoCodigo arquivoCodigo;
 
     @Column(name = "nome_funcao")
     private String nomeFuncao; // temporario
@@ -24,9 +24,9 @@ public class Ocorrencia {
     @Column(name = "descricao")
     private String descricao;
 
-    public Ocorrencia(String tipoProblema, String nomeArquivo, int linha, String descricao, String nomeFuncao){
+    public Ocorrencia(String tipoProblema, ArquivoCodigo arquivoCodigo, int linha, String descricao, String nomeFuncao){
         this.tipoProblema = tipoProblema;
-        this.nomeArquivo = nomeArquivo;
+        this.arquivoCodigo = arquivoCodigo;
         this.linha = linha;
         this.descricao = descricao;
         this.nomeFuncao = nomeFuncao; // temporariamente
@@ -38,8 +38,8 @@ public class Ocorrencia {
         return linha;
     }
 
-    public String getNomeArquivo() {
-        return nomeArquivo;
+    public ArquivoCodigo getNomeArquivo() {
+        return arquivoCodigo;
     }
 
     public String getDescricao() {
@@ -57,7 +57,7 @@ public class Ocorrencia {
                 Descrição: %s
                 Linha: %s
                 Nome função: %s
-                """, nomeArquivo, tipoProblema, descricao, linha, nomeFuncao);
+                """, arquivoCodigo.getNome(), tipoProblema, descricao, linha, nomeFuncao);
 
     }
 }

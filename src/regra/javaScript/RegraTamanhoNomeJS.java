@@ -30,7 +30,7 @@ public class RegraTamanhoNomeJS implements RegraAnalise {
                     int linha = codigo.substring(0, matcher.start()).split("\n").length;
                     if(nome.length() > 10){
                         TipoProblema problema = TipoProblema.NOME_FUNCAO_LONGO;
-                        Ocorrencia ocorrencia = new Ocorrencia(problema.getCodigo(), arquivo.getNome(), linha, problema.getDescricao(), matcher.group(1));
+                        Ocorrencia ocorrencia = new Ocorrencia(problema.getCodigo(), arquivo, linha, problema.getDescricao(), matcher.group(1));
                         ocorrencias.add(ocorrencia);
                     }
                 }
