@@ -1,7 +1,7 @@
 
 package modelo;
 import java.util.List;
-import enums.TipoLinguagem;
+import modelo.enums.TipoLinguagem;
 
 import javax.persistence.*;
 
@@ -9,9 +9,12 @@ import javax.persistence.*;
 @Table(name = "arquivo_codigo")
 public class ArquivoCodigo {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     @Column(name = "nome")
     private String nome;
-    @Column(name = "tipo_linguagem")
+    @Enumerated(EnumType.STRING)
     private TipoLinguagem tipoLinguagem;
     @Column(name = "conteudo")
     private String conteudo;
@@ -32,6 +35,8 @@ public class ArquivoCodigo {
         this.conteudo = conteudo;
         this.caminho = caminho;
     }
+
+    protected ArquivoCodigo(){}
 
     public String getConteudo(){
         return this.conteudo;

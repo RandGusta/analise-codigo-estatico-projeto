@@ -40,7 +40,7 @@ public class OcorrenciaDAOImpl implements OcorrenciaDAO {
 
     @Override
     public List<Ocorrencia> listar(){
-        Query query = em.createQuery("SELECT o FROM ocorrencia o");
+        Query query = em.createQuery("SELECT o FROM Ocorrencia o");
         List<Ocorrencia> lista = query.getResultList();
         return lista;
     }

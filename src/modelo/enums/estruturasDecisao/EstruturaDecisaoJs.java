@@ -1,4 +1,4 @@
-package modelo.estruturasDecisao;
+package modelo.enums.estruturasDecisao;
 
 import java.util.regex.Pattern;
 

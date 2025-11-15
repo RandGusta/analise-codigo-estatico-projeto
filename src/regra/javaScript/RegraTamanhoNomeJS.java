@@ -1,15 +1,13 @@
 package regra.javaScript;
 
 import modelo.ArquivoCodigo;
-import modelo.TipoDeclaracao;
-import modelo.TipoProblema;
-import modelo.tipoDeclaracao.TipoDeclaracaoJS;
+import modelo.enums.TipoProblema;
+import modelo.enums.tipoDeclaracao.TipoDeclaracaoJS;
 import regra.RegraAnalise;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import modelo.Ocorrencia;
 import servico.ServicoAnalise;

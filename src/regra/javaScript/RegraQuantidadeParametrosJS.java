@@ -2,8 +2,8 @@ package regra.javaScript;
 
 import modelo.ArquivoCodigo;
 import modelo.Ocorrencia;
-import modelo.TipoProblema;
-import modelo.tipoDeclaracao.TipoDeclaracaoJS;
+import modelo.enums.TipoProblema;
+import modelo.enums.tipoDeclaracao.TipoDeclaracaoJS;
 import regra.RegraAnalise;
 import servico.ServicoAnalise;
 

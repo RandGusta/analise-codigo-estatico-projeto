@@ -32,7 +32,7 @@ public class Ocorrencia {
         this.nomeFuncao = nomeFuncao; // temporariamente
     }
 
-    public Ocorrencia(){}
+    protected Ocorrencia(){}
 
     public int getLinha() {
         return linha;

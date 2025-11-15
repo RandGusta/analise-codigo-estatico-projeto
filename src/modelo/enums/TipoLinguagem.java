@@ -1,4 +1,4 @@
-package enums;
+package modelo.enums;
 
 public enum TipoLinguagem {
     JAVASCRIPT,

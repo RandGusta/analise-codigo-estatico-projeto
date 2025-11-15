@@ -1,4 +1,4 @@
-package modelo.comentariosCodigo;
+package modelo.enums.comentariosCodigo;
 
 import java.util.regex.Pattern;
 

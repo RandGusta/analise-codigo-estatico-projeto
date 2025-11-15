@@ -2,7 +2,7 @@ package regra.javaScript;
 
 import modelo.ArquivoCodigo;
 
-import modelo.estruturasDecisao.EstruturaDecisaoJs;
+import modelo.enums.estruturasDecisao.EstruturaDecisaoJs;
 
 import java.util.regex.Matcher;
 import servico.ServicoAnalise;

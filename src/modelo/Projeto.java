@@ -9,9 +9,9 @@ public class Projeto {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
         private Long id;
-        @Column(name="nome_projeto")
+        @Column(name="nome_projeto", nullable = false)
         private String nomeProjeto;
-        @Column(name="caminho")
+        @Column(name="caminho", nullable = false)
         private String caminho;
         @OneToMany(mappedBy = "projeto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
         private List<ArquivoCodigo> arquivo;
@@ -22,6 +22,8 @@ public class Projeto {
         this.caminho = caminho;
         this.arquivo = arquivo;
     }
+
+    protected Projeto(){}
 
         public void adicionarArquivo(ArquivoCodigo arquivoCodigo){
             if(arquivoCodigo != null){

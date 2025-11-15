@@ -1,4 +1,14 @@
 package dao;
 
-public class UsuarioDAO {
+import modelo.Projeto;
+import modelo.Usuario;
+
+import java.util.List;
+
+public interface UsuarioDAO {
+    void adicionarUsuario(Usuario usuario);
+    void deletarUsuarioPorId(Long id);
+    Usuario buscarUsuarioPorId(Long id);
+    List<Usuario> listarUsuario();
+
 }

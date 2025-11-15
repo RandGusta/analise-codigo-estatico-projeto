@@ -1,15 +1,26 @@
 package modelo;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.List;
+import modelo.enums.TipoUsuario;
 
-// classe com informações do usuário
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
+
+@Entity
+@Table(name="usuario")
 public class Usuario {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(name="nome")
     private String nome;
+    @Column(name ="email", nullable = false)
     private String email;
+    @Column(name="senha", nullable = false)
     private String senha;
+    @Column(name = "data_cadastro", nullable = false)
     private LocalDateTime dataCadastro;
+    @Enumerated(EnumType.STRING)
     private TipoUsuario tipoUsuario;
 
 
@@ -21,6 +32,7 @@ public class Usuario {
 
     }
 
+    protected Usuario(){}
 
     public String getNome() {
         return nome;
@@ -35,6 +47,20 @@ public class Usuario {
     public String getEmail() {
         return email;
     }
+
+    public LocalDateTime getDataCadastro() {
+        return dataCadastro;
+    }
+
+
+        public String usuarioDescricao(){
+        String string =
+                String.format("Nome usuário: %s, \n Email cadastrado: %s, \n Data registro %s", this.nome, this.email, this.dataCadastro);
+        return string;
+        }
+
+
+
 
 
 }

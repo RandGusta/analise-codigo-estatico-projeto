@@ -1,10 +1,8 @@
 package servico;
 
-import modelo.TipoDeclaracao;
-import modelo.TipoProblema;
-import modelo.comentariosCodigo.ComentarioJS;
-import modelo.estruturasDecisao.EstruturaDecisaoJs;
-import modelo.tipoDeclaracao.TipoDeclaracaoJS;
+import modelo.enums.comentariosCodigo.ComentarioJS;
+import modelo.enums.estruturasDecisao.EstruturaDecisaoJs;
+import modelo.enums.tipoDeclaracao.TipoDeclaracaoJS;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

@@ -1,4 +1,4 @@
-package modelo.tipoDeclaracao;
+package modelo.enums.tipoDeclaracao;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
