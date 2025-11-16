@@ -1,0 +1,185 @@
+/* ================================
+   Paleta IFPR
+   ================================ */
+:root {
+    --if-verde: #006633;
+    --if-verde-claro: #00994d;
+    --if-cinza: #333;
+    --if-cinza-claro: #f2f2f2;
+    --if-branco: #fff;
+}
+
+/* ================================
+   Reset básico
+   ================================ */
+body, h1, h2, h3, p, ul, li, table {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: var(--if-cinza-claro);
+    padding: 20px;
+    color: var(--if-cinza);
+}
+
+/* ================================
+   Cabeçalho
+   ================================ */
+header {
+    background: var(--if-verde);
+    color: var(--if-branco);
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+}
+
+header h1 {
+    margin-bottom: 10px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+nav a {
+    color: var(--if-branco);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+/* ================================
+   Conteúdo principal
+   ================================ */
+main, .form-container {
+    background: var(--if-branco);
+    padding: 25px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+main section {
+    margin-top: 15px;
+}
+
+/* ================================
+   Inputs e formulários
+   ================================ */
+.form-container {
+    max-width: 400px;
+    margin: auto;
+}
+
+label {
+    font-weight: bold;
+    margin-top: 10px;
+    display: block;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #bbb;
+    border-radius: 5px;
+    margin-bottom: 12px;
+}
+
+/* ================================
+   Botões (estilo IFPR)
+   ================================ */
+.btn-if {
+    background: var(--if-verde);
+    color: var(--if-branco);
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-size: 15px;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+    font-weight: bold;
+}
+
+.btn-if:hover {
+    background: var(--if-verde-claro);
+}
+
+.btn-danger {
+    background: #aa0000;
+}
+
+.btn-danger:hover {
+    background: #cc0000;
+}
+
+/* Links */
+.link-if {
+    display: inline-block;
+    margin-top: 10px;
+    color: var(--if-verde);
+    text-decoration: none;
+}
+
+.link-if:hover {
+    text-decoration: underline;
+}
+
+/* ================================
+   Tabelas (páginas de projetos)
+   ================================ */
+.tabela-if {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--if-branco);
+}
+
+.tabela-if th {
+    background: var(--if-verde);
+    color: var(--if-branco);
+    padding: 12px;
+}
+
+.tabela-if td {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.tabela-if tr:nth-child(even) {
+    background: #f9f9f9;
+}
+
+/* ================================
+   Página do projeto específico
+   ================================ */
+.lista-arquivos {
+    background: var(--if-branco);
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 450px;
+}
+
+.linha-arquivo {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #ddd;
+    align-items: center;
+}
+
+/* ================================
+   Rodapé
+   ================================ */
+footer {
+    margin-top: 40px;
+    text-align: center;
+    color: #444;
+}
