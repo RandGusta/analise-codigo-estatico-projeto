@@ -51,4 +51,20 @@ public class UsuarioDAOImpl implements UsuarioDAO {
     }
 
 
+    @Override
+    public Usuario buscarUsuarioPorEmail(String email){
+        TypedQuery<Usuario> query = em.createQuery("SELECT U FROM Usuario WHERE u.email == :email", Usuario.class);
+        query.setParameter("email", email);
+        Usuario usuario = query.getSingleResult();
+        return usuario;
+    }
+
+    @Override
+    public Long contarUsuariosCadastrados(){
+        TypedQuery<Long> query = em.createQuery("SELECT COUNT(u) FROM Usuario u", Long.class);
+        Long quantidade = query.getSingleResult();
+        return quantidade;
+    }
+
+
 }

@@ -10,5 +10,6 @@ public interface UsuarioDAO {
     void deletarUsuarioPorId(Long id);
     Usuario buscarUsuarioPorId(Long id);
     List<Usuario> listarUsuario();
-
+    Usuario buscarUsuarioPorEmail(String email);
+    Long contarUsuariosCadastrados();
 }
