@@ -12,7 +12,7 @@ import java.util.regex.Matcher;
 import modelo.Ocorrencia;
 import servico.ServicoAnalise;
 
-public class RegraTamanhoNomeJS implements RegraAnalise {
+public class RegraTamanhoNomeJS  extends RegraAnaliseJS implements RegraAnalise {
         private ServicoAnalise servicoAnalise = new ServicoAnalise();
 
     @Override

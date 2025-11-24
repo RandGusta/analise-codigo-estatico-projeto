@@ -59,6 +59,8 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         return usuario;
     }
 
+
+
     @Override
     public Long contarUsuariosCadastrados(){
         TypedQuery<Long> query = em.createQuery("SELECT COUNT(u) FROM Usuario u", Long.class);

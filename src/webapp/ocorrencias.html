@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Ocorrências da Análise</title>
+    <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+
+<h1>Resultado da Análise</h1>
+<br>
+
+<div id="resultado"></div>
+
+<br><br>
+<a href="projetoEspecifico.html" class="link-if">Voltar ao Projeto</a>
+
+<script>
+
+    async function carregarOcorrencias() {
+
+        // Busca o resultado da análise no backend
+        const resposta = await fetch("/resultado-analise");
+
+        if (!resposta.ok) {
+            document.getElementById("resultado").innerHTML =
+                "<p>Não foi possível carregar os resultados.</p>";
+            return;
+        }
+
+        const json = await resposta.json();
+        const container = document.getElementById("resultado");
+
+        // Caso não tenha havido problemas
+        if (Object.keys(json).length === 0) {
+            container.innerHTML = "<p>Nenhuma ocorrência encontrada.</p>";
+            return;
+        }
+
+        // Monta cada bloco de arquivo analisado
+        for (const nomeArquivo in json) {
+            const ocorrencias = json[nomeArquivo];
+
+            const bloco = document.createElement("div");
+            bloco.className = "bloco-arquivo";
+
+            let html = `<h2>Arquivo: ${nomeArquivo}</h2>`;
+
+            if (!ocorrencias || ocorrencias.length === 0) {
+                html += `<p>Nenhum problema encontrado.</p>`;
+            } else {
+                html += `<ul class="lista-ocorrencias">`;
+
+                ocorrencias.forEach(oc => {
+                    html += `
+                        <li>
+                            <strong>[${oc.codigo}]</strong>
+                            (linha ${oc.linha}) –
+                            ${oc.descricao}<br>
+                            <em>Trecho:</em> ${oc.trecho}
+                        </li>
+                    `;
+                });
+
+                html += `</ul>`;
+            }
+
+            bloco.innerHTML = html;
+            container.appendChild(bloco);
+        }
+    }
+
+    // Executa quando abrir a página
+    carregarOcorrencias();
+
+</script>
+
+</body>
+</html>

@@ -52,6 +52,7 @@ public class Usuario {
         return dataCadastro;
     }
 
+    public String getSenha(){return senha;}
 
         public String usuarioDescricao(){
         String string =

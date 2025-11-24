@@ -9,7 +9,7 @@
 
 <h1>Meus projetos!</h1>
 
-<table class="tabela-if">
+<table class="tabela-if" id="tabela-projetos">
     <tr>
         <th>N°</th>
         <th>Nome do projeto</th>
@@ -31,7 +31,49 @@
 <br>
 <a href="index.html" class="link-if">Voltar para página inicial</a>
 <br><br>
-<button class="btn-if" id="btn-analisar">Adicionar novo Projeto</button>
+
+<form id="form-novo-projeto" action="/upload-projeto" method="post" enctype="multipart/form-data">
+    <input type="file" id="input-projeto" name="projeto" style="display:none;" webkitdirectory directory>
+    <button class="btn-if" type="button" id="btn-analisar">Adicionar novo Projeto</button>
+</form>
+
+<script>
+    const inputProjeto = document.getElementById('input-projeto');
+    const btnAnalisar = document.getElementById('btn-analisar');
+    const formProjeto = document.getElementById('form-novo-projeto');
+    const tabelaProjetos = document.getElementById('tabela-projetos');
+
+    let contadorProjetos = tabelaProjetos.rows.length; // começa após o cabeçalho
+
+    btnAnalisar.addEventListener('click', () => {
+        inputProjeto.click(); // abre explorador de pastas
+    });
+
+    inputProjeto.addEventListener('change', () => {
+        if(inputProjeto.files.length > 0){
+            // pega o nome da pasta selecionada (primeira pasta do arquivo)
+            const primeiroArquivo = inputProjeto.files[0];
+            const caminhoCompleto = primeiroArquivo.webkitRelativePath; // ex: "projetoX/file.js"
+            const nomeProjeto = caminhoCompleto.split('/')[0]; // pega o nome da pasta principal
+
+            // adiciona novo projeto na tabela
+            contadorProjetos++;
+            const novaLinha = tabelaProjetos.insertRow();
+            novaLinha.innerHTML = `
+                <td>${contadorProjetos}</td>
+                <td>${nomeProjeto}</td>
+                <td>${new Date().toLocaleDateString()}</td>
+                <td>
+                    <a href="projetoEspecifico.html" class="btn-if">Editar</a>
+                    <button class="btn-if btn-danger">Deletar</button>
+                </td>
+            `;
+
+            // envia automaticamente para o backend
+            formProjeto.submit();
+        }
+    });
+</script>
 
 </body>
 </html>

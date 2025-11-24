@@ -4,6 +4,7 @@ import dao.UsuarioDAO;
 import dao.impl.UsuarioDAOImpl;
 import modelo.Usuario;
 import modelo.enums.TipoUsuario;
+import org.mindrot.jbcrypt.BCrypt;
 
 import javax.persistence.EntityManager;
 
@@ -20,12 +21,23 @@ public class ServicoUsuario {
             throw new RuntimeException("Email já cadastrado");
         } else {
             TipoUsuario tipoUsuario = definirTipoUsuario();
-            Usuario usuario = new Usuario(nome, email, senha, tipoUsuario);
+            String senhaHash = BCrypt.hashpw(senha, BCrypt.gensalt());
+            Usuario usuario = new Usuario(nome, email, senhaHash, tipoUsuario);
             usuarioDAO.adicionarUsuario(usuario);
         }
 
 
     }
+
+
+
+    public boolean validarLoginUsuario(String email, String senha){
+        Usuario usuario = usuarioDAO.buscarUsuarioPorEmail(email);
+        if(usuario == null) return false;
+        return usuario.getSenha().equals(senha);
+    }
+
+
 
 
     private TipoUsuario definirTipoUsuario(){

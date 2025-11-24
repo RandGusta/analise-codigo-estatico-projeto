@@ -20,6 +20,13 @@
 
         <button class="btn-if" id="btn-cadastrar">Cadastrar</button>
     </form>
+    <p id="erro" style="color:red; display:none;">Erro ao tentar cadastrar email ou senha!</p>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        if(params.get('erro') === 'true') {
+            document.getElementById('erro').style.display = 'block';
+        }
+    </script>
     <a href="login.html" class="link-if">Já tenho conta — fazer login</a>
 </div>
 </body>

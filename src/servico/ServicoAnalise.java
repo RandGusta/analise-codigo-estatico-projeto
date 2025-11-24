@@ -10,6 +10,9 @@ import java.util.regex.Pattern;
 public class ServicoAnalise {
 
 
+
+
+
     public Matcher obterFuncoes(String codigo, TipoDeclaracaoJS tipo) {
         Pattern padrao = tipo.getPadrao();
         return padrao.matcher(codigo);

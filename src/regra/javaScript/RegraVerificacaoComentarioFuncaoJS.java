@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 
-public class RegraVerificacaoComentarioFuncaoJS implements RegraAnalise {
+public class RegraVerificacaoComentarioFuncaoJS  extends RegraAnaliseJS implements RegraAnalise {
     ServicoAnalise servicoAnalise = new ServicoAnalise();
 
     @Override

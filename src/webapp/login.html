@@ -6,22 +6,23 @@
     <link rel="stylesheet" href="css/estilo.css">
 </head>
 <body>
-
 <h1>Login</h1>
-
 <div class="form-container">
     <form action="efetuar-login" method="post">
-    <label>Email:</label>
-    <input type="text" id="email" name="email" required>
-
-    <label>Senha:</label>
-    <input type="password" id="senha" name="senha" required>
-
-    <button class="btn-if" id="btn-login" type="submit">Entrar</button>
-
+        <label>Email:</label>
+        <input type="text" id="email" name="email" required>
+        <label>Senha:</label>
+        <input type="password" id="senha" name="senha" required>
+        <button class="btn-if" id="btn-login" type="submit">Entrar</button>
     </form>
+    <p id="erro" style="color:red; display:none;">Email ou senha incorretos!</p>
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        if(params.get('erro') === 'true') {
+            document.getElementById('erro').style.display = 'block';
+        }
+    </script>
     <a href="cadastro.html" class="link-if">Ainda não tenho conta — cadastrar</a>
 </div>
-
 </body>
 </html>

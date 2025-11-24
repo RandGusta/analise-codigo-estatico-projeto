@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 
-public class RegraQuantidadeParametrosJS implements RegraAnalise {
+public class RegraQuantidadeParametrosJS extends RegraAnaliseJS implements RegraAnalise {
     private ServicoAnalise servicoAnalise = new ServicoAnalise();
 
 

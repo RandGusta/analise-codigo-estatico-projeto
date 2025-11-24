@@ -11,10 +11,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 @WebServlet("cadastrar-usuario\"")
-public class UsuarioController extends HttpServlet{
+public class CadastroController extends HttpServlet{
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException{
@@ -27,9 +28,18 @@ public class UsuarioController extends HttpServlet{
         String email = request.getParameter("email");
         String senha = request.getParameter("senha");
 
-        servicoUsuario.adicionarUsuario(nome, email, senha);
+        try {
+            servicoUsuario.adicionarUsuario(nome, email, senha);
+            HttpSession session = request.getSession();
+            session.setAttribute("usuarioLogado", email);
+            response.sendRedirect("index.html");
 
-        response.getWriter().write("dados recebidos!!!");
+        } catch (RuntimeException e) {
+            response.sendRedirect("cadastro.html?erro=true");
+        }
+
+
+        em.close();
     }
 
 
