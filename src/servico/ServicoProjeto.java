@@ -17,22 +17,25 @@ public class ServicoProjeto {      // orquestrador para salvar o arquivoCodigo j
         this.arquivoCodigoDAO = arquivoCodigoDAO;
     }
 
-    public void adicionarProjeto(Projeto projeto, List<ArquivoCodigo> listaArquivos){
+    public void adicionarProjeto(Projeto projeto){
 
         if(projeto.getNomeProjeto() == null || projeto.getNomeProjeto().isEmpty()){
 
             throw new RuntimeException("O projeto precisa de um nome!!");
         }
 
+        List<ArquivoCodigo> listaArquivos = projeto.getArquivo();
+
         projetoDAO.inserirProjeto(projeto);
         System.out.println("Projeto salvo com ID:" + projeto.getId());
 
-        for(ArquivoCodigo arq : listaArquivos){
-            arq.setProjeto(projeto);
-            arquivoCodigoDAO.adicionarArquivo(arq);
+        if(listaArquivos != null) {
+            for (ArquivoCodigo arq : listaArquivos) {
+                arq.setProjeto(projeto);
+                arquivoCodigoDAO.adicionarArquivo(arq);
+            }
+
         }
-
-
 
     }
 

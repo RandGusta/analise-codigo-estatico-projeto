@@ -29,4 +29,9 @@ public class Projeto {
     public Long getId(){
         return id;
     }
+
+
+    public List<ArquivoCodigo> getArquivo() {
+        return arquivo;
+    }
 }
