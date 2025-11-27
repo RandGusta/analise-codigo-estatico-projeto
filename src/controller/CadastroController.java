@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet("cadastrar-usuario\"")
+@WebServlet("/cadastrar-usuario")
 public class CadastroController extends HttpServlet{
 
     @Override
@@ -33,13 +33,11 @@ public class CadastroController extends HttpServlet{
             HttpSession session = request.getSession();
             session.setAttribute("usuarioLogado", email);
             response.sendRedirect("index.html");
-
         } catch (RuntimeException e) {
+            e.printStackTrace();
             response.sendRedirect("cadastro.html?erro=true");
         }
 
-
-        em.close();
     }
 
 

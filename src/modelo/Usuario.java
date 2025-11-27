@@ -1,5 +1,6 @@
 package modelo;
 import modelo.enums.TipoUsuario;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -18,7 +19,8 @@ public class Usuario {
     private String email;
     @Column(name="senha", nullable = false)
     private String senha;
-    @Column(name = "data_cadastro", nullable = false)
+    @CreationTimestamp
+    @Column(name = "data_cadastro",nullable = false, updatable = false)
     private LocalDateTime dataCadastro;
     @Enumerated(EnumType.STRING)
     private TipoUsuario tipoUsuario;

@@ -53,10 +53,18 @@ public class UsuarioDAOImpl implements UsuarioDAO {
 
     @Override
     public Usuario buscarUsuarioPorEmail(String email){
-        TypedQuery<Usuario> query = em.createQuery("SELECT U FROM Usuario WHERE u.email == :email", Usuario.class);
-        query.setParameter("email", email);
-        Usuario usuario = query.getSingleResult();
-        return usuario;
+        try {
+
+
+            TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u WHERE u.email = :email", Usuario.class);
+            query.setParameter("email", email);
+            Usuario usuario = query.getSingleResult();
+            return usuario;
+        }
+        catch (javax.persistence.NoResultException e)
+        {
+         return null; // forçanod retornar null poruqe getSinleNode é dramatico
+        }
     }
 
 

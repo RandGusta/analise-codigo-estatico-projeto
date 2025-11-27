@@ -26,7 +26,6 @@ public class AnaliseController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        // lê JSON do body: { "arquivos": ["a.js","b.js"] }
         String json = request.getReader().lines().collect(Collectors.joining());
         Type tipo = new TypeToken<Map<String, List<String>>>(){}.getType();
         Map<String, List<String>> dados = gson.fromJson(json, tipo);
@@ -37,12 +36,10 @@ public class AnaliseController extends HttpServlet {
             return;
         }
 
-        // Monta a lista de ArquivoCodigo a partir dos nomes
+
         List<ArquivoCodigo> arquivosParaAnalisar = new ArrayList<>();
 
-        // *** ATENÇÃO: Aqui eu assumo que os arquivos já foram enviados anteriormente
-        // e salvos em disco na pasta "uploads/" dentro do webapp.
-        // Ajuste o caminho caso você salve em outro local.
+
         Path uploadsDir = Paths.get(getServletContext().getRealPath("/uploads"));
 
         for (String nomeArquivo : arquivosSelecionados) {
@@ -62,8 +59,7 @@ public class AnaliseController extends HttpServlet {
             ArquivoCodigo ac = new ArquivoCodigo(
                     nomeArquivo,
                     TipoLinguagem.JAVASCRIPT, // ajuste o valor do enum se o seu for diferente
-                    conteudo,
-                    caminhoRelativo
+                    conteudo
             );
             arquivosParaAnalisar.add(ac);
         }

@@ -5,26 +5,35 @@ import dao.ArquivoCodigoDAO;
 import modelo.ArquivoCodigo;
 
 import javax.persistence.EntityManager;
-import javax.persistence.OneToMany;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
-import java.util.Queue;
 
-public class ArquivoCodigoImpl implements ArquivoCodigoDAO {
+public class ArquivoCodigoDAOImpl implements ArquivoCodigoDAO {
     private EntityManager em;
 
-    public ArquivoCodigoImpl(EntityManager em){
+    public ArquivoCodigoDAOImpl(EntityManager em){
         this.em = em;
     }
 
 
     @Override
     public void adicionarArquivo(ArquivoCodigo arquivoCodigo){
-        em.getTransaction().begin();
-        em.persist(arquivoCodigo);
-        em.getTransaction().commit();
-    }
+        try
+        {
+            em.getTransaction().begin();
+            em.persist(arquivoCodigo);
+            em.getTransaction().commit();
+        } catch (Exception e)
+        {
+          if(em.getTransaction().isActive())
+          {
+              em.getTransaction().rollback(); // apagar o lixo se der erro
+          }
+          throw new RuntimeException("erro ao salvar o usuario: " + e);
+
+        }
+        }
 
     @Override
     public void removerArquivoPorId(Long id){

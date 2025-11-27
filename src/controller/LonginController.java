@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 
-@WebServlet("efetuar-login")
+@WebServlet("/efetuar-login")
 public class LonginController extends HttpServlet {
 
     @Override

@@ -16,7 +16,8 @@ public class ArquivoCodigo {
     private String nome;
     @Enumerated(EnumType.STRING)
     private TipoLinguagem tipoLinguagem;
-    @Column(name = "conteudo")
+    @Lob
+    @Column(name = "conteudo", columnDefinition = "LONGTEXT")
     private String conteudo;
 
     @ManyToOne
@@ -26,14 +27,10 @@ public class ArquivoCodigo {
     @OneToMany(mappedBy = "arquivoCodigo", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Ocorrencia> ocorrencias;
 
-    @Column(name="caminho")
-    private String caminho;
-
-    public ArquivoCodigo(String nome, TipoLinguagem tipoLinguagem, String conteudo, String caminho){
+    public ArquivoCodigo(String nome, TipoLinguagem tipoLinguagem, String conteudo){
         this.nome = nome;
         this.tipoLinguagem = tipoLinguagem;
         this.conteudo = conteudo;
-        this.caminho = caminho;
     }
 
     protected ArquivoCodigo(){}
@@ -50,14 +47,14 @@ public class ArquivoCodigo {
         return this.ocorrencias;
     }
 
-    public void atualizarCaminho(String novoCaminho){
-        this.caminho = novoCaminho;
-        System.out.println("caminho atualizado");
+
+    public void setProjeto(Projeto projeto){
+        this.projeto = projeto;
     }
 
     @Override
     public String toString() {
-        String string = String.format("Nome: %s, Linguagem: %s, Caminho do Arquivo: %s", this.nome, this.ocorrencias, this.caminho);
+        String string = String.format("Nome: %s, Linguagem: %s, Caminho do Arquivo: %s", this.nome, this.ocorrencias);
         return string;
     }
 }
