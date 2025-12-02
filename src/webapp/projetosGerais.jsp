@@ -26,7 +26,7 @@
                 <td>${p.nomeProjeto}</td>
                 <td>${p.arquivos.size()} un.</td>
                 <td>
-                    <a href="#" class="btn-if">Editar</a>
+                    <a href="projeto-especifico?id=${p.id}" class="btn-if">Editar</a>
                    <a href="deletar-projeto?id=${p.id}" class="btn-if btn-danger"
                           onclick="return confirm('Tem certeza que deseja apagar este projeto?');">
                           Deletar

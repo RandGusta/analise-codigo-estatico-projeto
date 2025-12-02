@@ -48,5 +48,8 @@ public class ServicoProjeto {      // orquestrador para salvar o arquivoCodigo j
         projetoDAO.deletarProjetoPorId(id);
     }
 
+    public Projeto buscarProjeto(Long id){
+        return projetoDAO.buscarProjetoPorId(id);
+    }
 
 }
