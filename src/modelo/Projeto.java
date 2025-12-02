@@ -31,7 +31,7 @@ public class Projeto {
     }
 
 
-    public List<ArquivoCodigo> getArquivo() {
+    public List<ArquivoCodigo> getArquivos() {
         return arquivo;
     }
 }

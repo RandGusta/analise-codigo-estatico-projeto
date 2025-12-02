@@ -15,7 +15,7 @@ public class ServicoArquivoCodigo {
         {
             String nomeArquivo = part.getSubmittedFileName();
 
-            if(nomeArquivo == null && !nomeArquivo.endsWith(".js")){
+            if(nomeArquivo == null || !nomeArquivo.endsWith(".js")){
                 return null;
             }
 

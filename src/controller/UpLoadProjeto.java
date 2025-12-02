@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Scanner;
 
 @WebServlet("/upload-projeto")
 @MultipartConfig // obrigatorio para receber arquivos
@@ -63,6 +64,8 @@ public class UpLoadProjeto extends HttpServlet {
 
         Projeto projeto = new Projeto(nomeProjeto, listarArquivos);
         servicoProjeto.adicionarProjeto(projeto);
+        response.sendRedirect("meus-projetos");
+
     } catch (Exception e) {
             e.printStackTrace();
         } finally {

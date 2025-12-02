@@ -24,7 +24,7 @@ public class ServicoProjeto {      // orquestrador para salvar o arquivoCodigo j
             throw new RuntimeException("O projeto precisa de um nome!!");
         }
 
-        List<ArquivoCodigo> listaArquivos = projeto.getArquivo();
+        List<ArquivoCodigo> listaArquivos = projeto.getArquivos();
 
         projetoDAO.inserirProjeto(projeto);
         System.out.println("Projeto salvo com ID:" + projeto.getId());
@@ -37,6 +37,15 @@ public class ServicoProjeto {      // orquestrador para salvar o arquivoCodigo j
 
         }
 
+    }
+
+
+    public List<Projeto> listarProjeto(){
+        return projetoDAO.listarProjetos();
+    }
+
+    public void deletarProjeto(Long id){
+        projetoDAO.deletarProjetoPorId(id);
     }
 
 
