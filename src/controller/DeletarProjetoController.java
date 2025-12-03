@@ -37,7 +37,12 @@ public class DeletarProjetoController extends HttpServlet{
             e.printStackTrace();
             response.getWriter().write("erro ao deletar : " + e.getMessage());
         } finally {
-            if(em.isOpen()) em.close();
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
+            if (emf != null && emf.isOpen()) {
+                emf.close();
+            }
         }
 
     }

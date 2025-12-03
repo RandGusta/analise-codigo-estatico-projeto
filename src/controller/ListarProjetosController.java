@@ -41,6 +41,10 @@ public class ListarProjetosController extends HttpServlet {
             e.printStackTrace();
         } finally {
             if(em.isOpen()) em.close();
+            if (emf != null && emf.isOpen()) {
+                emf.close();
+            }
+
         }
 
 

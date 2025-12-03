@@ -35,8 +35,19 @@ public class ProjetoEspecificoController extends HttpServlet {
             if(projeto != null){ // evitar o LazyInitialization
                 projeto.getArquivos().size();
             }
+            request.setAttribute("projetoDetalhe", projeto);
+            request.getRequestDispatcher("projetoEspecifico.jsp").forward(request, response);
 
-
+        } catch (Exception e){
+            e.printStackTrace();
+            response.sendRedirect("meus-projetos");
+        } finally {
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
+            if (emf != null && emf.isOpen()) {
+                emf.close();
+            }
         }
     }
 

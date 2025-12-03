@@ -21,6 +21,7 @@ public class CadastroController extends HttpServlet{
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException{
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("meuPC");
         EntityManager em = emf.createEntityManager();
+        try{
         UsuarioDAOImpl usuarioDAO = new UsuarioDAOImpl(em);
         ServicoUsuario servicoUsuario = new ServicoUsuario(usuarioDAO);
 
@@ -32,12 +33,26 @@ public class CadastroController extends HttpServlet{
             servicoUsuario.adicionarUsuario(nome, email, senha);
             HttpSession session = request.getSession();
             session.setAttribute("usuarioLogado", email);
-            response.sendRedirect("index.html");
+            response.sendRedirect("home.html");
         } catch (RuntimeException e) {
             e.printStackTrace();
-            response.sendRedirect("cadastro.html?erro=true");
+            response.sendRedirect("index.html?erro=true");
         }
 
+    } catch (Exception e){
+            e.printStackTrace();
+            response.getWriter().write("erro: " + e.getMessage());
+        } finally {
+            // 3. FECHA TUDO! (A ordem importa: fecha o filho, depois o pai)
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
+            if (emf != null && emf.isOpen()) {
+                emf.close(); // <--- ESSA LINHA VAI SALVAR SEU BANCO DE TRAVAR
+            }
+
+
+        }
     }
 
 

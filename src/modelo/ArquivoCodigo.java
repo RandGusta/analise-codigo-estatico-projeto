@@ -52,6 +52,16 @@ public class ArquivoCodigo {
         this.projeto = projeto;
     }
 
+    public TipoLinguagem getTipoLinguagem() {
+        return tipoLinguagem;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+
+
     @Override
     public String toString() {
         String string = String.format("Nome: %s, Linguagem: %s, Caminho do Arquivo: %s", this.nome, this.ocorrencias);

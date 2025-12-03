@@ -4,6 +4,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 
 @Entity
@@ -24,6 +25,9 @@ public class Usuario {
     private LocalDateTime dataCadastro;
     @Enumerated(EnumType.STRING)
     private TipoUsuario tipoUsuario;
+
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Projeto> projeto;
 
 
     public Usuario(String nome, String email, String senha, TipoUsuario tipoUsuario){
@@ -53,6 +57,8 @@ public class Usuario {
     public LocalDateTime getDataCadastro() {
         return dataCadastro;
     }
+
+    public List<Projeto> getProjeto(){return projeto;}
 
     public String getSenha(){return senha;}
 

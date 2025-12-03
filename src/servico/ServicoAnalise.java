@@ -1,45 +1,60 @@
 package servico;
 
-import modelo.enums.comentariosCodigo.ComentarioJS;
-import modelo.enums.estruturasDecisao.EstruturaDecisaoJs;
-import modelo.enums.tipoDeclaracao.TipoDeclaracaoJS;
+import dao.impl.ArquivoCodigoDAOImpl;
+import modelo.ArquivoCodigo;
+import modelo.Ocorrencia;
+import regra.*;
+import regra.javaScript.RegraComplexidadeCiclomaticaJS;
+import regra.javaScript.RegraQuantidadeParametrosJS;
+import regra.javaScript.RegraTamanhoNomeJS;
+import regra.javaScript.RegraVerificacaoComentarioFuncaoJS;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ServicoAnalise {
 
+    private ArquivoCodigoDAOImpl arquivoDAO;
+    private List<RegraAnalise> regras = new ArrayList<>();
 
+    public ServicoAnalise(ArquivoCodigoDAOImpl arquivoDAO) {
+        this.arquivoDAO = arquivoDAO;
 
+        this.regras.add(new RegraTamanhoNomeJS());
+        this.regras.add(new RegraVerificacaoComentarioFuncaoJS());
+        this.regras.add(new RegraVerificacaoComentarioFuncaoJS());
+        this.regras.add(new RegraComplexidadeCiclomaticaJS());
 
-
-    public Matcher obterFuncoes(String codigo, TipoDeclaracaoJS tipo) {
-        Pattern padrao = tipo.getPadrao();
-        return padrao.matcher(codigo);
     }
 
 
-    public int contarParametros(String parametros) {
-        if (parametros == null || parametros.isBlank()) return 0;
-        String[] vetor = parametros.split(",");
-        int cont = 0;
-        for (String p : vetor) {
-            if (!p.trim().isEmpty()) cont++;
+    public List<ArquivoCodigo> buscarArquivosPorIds(String[] idsSelecionados) {
+        List<ArquivoCodigo> listaArquivos = new ArrayList<>();
+        if (idsSelecionados != null) {
+            for (String idStr : idsSelecionados) {
+                try {
+                    Long id = Long.parseLong(idStr);
+                    ArquivoCodigo arq = arquivoDAO.buscarArquivoPorId(id);
+                    if (arq != null) listaArquivos.add(arq);
+                } catch (NumberFormatException e) {
+                    System.out.println("ID inválido ignorado: " + idStr);
+                }
+            }
         }
-        return cont;
+        return listaArquivos;
     }
 
-    public Matcher obterComentario(String conteudo, ComentarioJS comentarioJS){
-        Pattern pattern = comentarioJS.getPadrao();
-        return pattern.matcher(conteudo);
+    public List<Ocorrencia> analisarArquivos(List<ArquivoCodigo> arquivos) {
+        List<Ocorrencia> relatorioGeral = new ArrayList<>();
+
+        for (ArquivoCodigo arquivo : arquivos) {
+            for (RegraAnalise regra : regras) {
+                // A regra agora usa AnaliseUtils internamente
+                List<Ocorrencia> problemas = regra.aplicar(arquivo);
+                relatorioGeral.addAll(problemas);
+            }
+        }
+        return relatorioGeral;
     }
-
-
-    public Matcher obterEstruturaDecisao(String codigo, EstruturaDecisaoJs estruturaDecisaoJs){
-        Pattern pattern = estruturaDecisaoJs.getPadrao();
-        return pattern.matcher(codigo);
-    }
-
-
 }
-

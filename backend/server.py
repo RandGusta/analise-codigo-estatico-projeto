@@ -26,10 +26,10 @@ def find_project(pid):
     return None
 
 # ---------- rotas do frontend estático ----------
-# Serve index.html e outros arquivos do frontend (já funciona abrindo /)
+# Serve home.html e outros arquivos do frontend (já funciona abrindo /)
 @app.route("/")
 def index():
-    return app.send_static_file("index.html")
+    return app.send_static_file("home.html")
 
 # rota para servir qualquer arquivo estático do frontend (css, js, html)
 @app.route("/<path:filename>")

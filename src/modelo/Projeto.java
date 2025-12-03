@@ -13,6 +13,9 @@ public class Projeto {
         private String nomeProjeto;
         @OneToMany(mappedBy = "projeto", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
         private List<ArquivoCodigo> arquivo;
+        @ManyToOne
+        @JoinColumn(name = "id_usuario")
+        private Usuario usuario;
 
 
     public Projeto(String nomeProjeto, List<ArquivoCodigo> arquivo){
@@ -30,6 +33,9 @@ public class Projeto {
         return id;
     }
 
+    public void setUsuario(Usuario usuario){
+        this.usuario = usuario;
+    }
 
     public List<ArquivoCodigo> getArquivos() {
         return arquivo;

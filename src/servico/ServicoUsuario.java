@@ -1,5 +1,6 @@
 package servico;
 
+
 import dao.UsuarioDAO;
 import dao.impl.UsuarioDAOImpl;
 import modelo.Usuario;
@@ -31,10 +32,14 @@ public class ServicoUsuario {
 
 
 
-    public boolean validarLoginUsuario(String email, String senha){
+    public Usuario validarLoginUsuario(String email, String senha){
         Usuario usuario = usuarioDAO.buscarUsuarioPorEmail(email);
-        if(usuario == null) return false;
-        return usuario.getSenha().equals(senha);
+        if(usuario == null) return null;
+
+         if(BCrypt.checkpw(senha, usuario.getSenha())){ // descriptografa antes de comparar
+             return usuario;
+         }
+         return null;
     }
 
 

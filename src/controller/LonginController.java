@@ -2,6 +2,7 @@ package controller;
 
 import com.sun.net.httpserver.HttpsServer;
 import dao.impl.UsuarioDAOImpl;
+import modelo.Usuario;
 import servico.ServicoUsuario;
 
 import javax.persistence.EntityManager;
@@ -22,25 +23,35 @@ public class LonginController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("meuPC");
         EntityManager em = emf.createEntityManager();
+        try{
         UsuarioDAOImpl usuarioDAO = new UsuarioDAOImpl(em);
         ServicoUsuario servicoUsuario = new ServicoUsuario(usuarioDAO);
 
         String email = request.getParameter("email");
         String senha = request.getParameter("senha");
 
-        boolean loginValidado = servicoUsuario.validarLoginUsuario(email, senha);
+        Usuario loginValidado = servicoUsuario.validarLoginUsuario(email, senha);
 
-        if(loginValidado){
+        if(loginValidado != null){
             HttpSession session = request.getSession();
 
-            session.setAttribute("usuarioLogado", email);
-            response.sendRedirect("index.html");
+            session.setAttribute("usuarioLogado", loginValidado);
+            response.sendRedirect("meus-projetos");
 
         } else {
-            response.sendRedirect("login.html?erro=true");
+            response.sendRedirect("index.html?erro=true");
         }
-
-        em.close();
+        } catch (Exception e){
+            e.printStackTrace();
+            response.getWriter().write("erro: " + e.getMessage());
+        } finally {
+            if (em != null && em.isOpen()) {
+                em.close();
+            }
+            if (emf != null && emf.isOpen()) {
+                emf.close();
+            }
+        }
     }
 
 }

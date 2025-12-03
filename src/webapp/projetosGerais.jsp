@@ -11,7 +11,7 @@
 <body>
 
     <h1>Meus projetos!</h1>
-
+    <h3>Usuário Logado: [${usuarioLogado.nome}]</h3>
     <table class="tabela-if" id="tabela-projetos">
         <tr>
             <th>N°</th>
@@ -41,13 +41,13 @@
     </table>
 
     <br>
-    <a href="index.html" class="link-if">Voltar para página inicial</a>
+    <a href="home.html" class="link-if">Voltar para página inicial</a>
     <br><br>
 
     <div style="border: 1px solid #ccc; padding: 20px; border-radius: 8px; max-width: 600px;">
         <h3>Adicionar Novo Projeto</h3>
 
-        <form action="/upload-projeto" method="post" enctype="multipart/form-data">
+        <form id="form-novo-projeto" action="${pageContext.request.contextPath}/upload-projeto" method="post" enctype="multipart/form-data">
 
             <div style="margin-bottom: 15px;">
                 <label for="campo-nome"><strong>Nome do Projeto:</strong></label><br>

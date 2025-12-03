@@ -26,6 +26,7 @@ public class AnaliseController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+
         String json = request.getReader().lines().collect(Collectors.joining());
         Type tipo = new TypeToken<Map<String, List<String>>>(){}.getType();
         Map<String, List<String>> dados = gson.fromJson(json, tipo);

@@ -1,43 +1,55 @@
 package regra.javaScript;
 
 import modelo.ArquivoCodigo;
+import modelo.Ocorrencia;
 import modelo.enums.TipoProblema;
 import modelo.enums.tipoDeclaracao.TipoDeclaracaoJS;
 import regra.RegraAnalise;
+import util.AnaliseUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 
-import modelo.Ocorrencia;
-import servico.ServicoAnalise;
-
-public class RegraTamanhoNomeJS  extends RegraAnaliseJS implements RegraAnalise {
-        private ServicoAnalise servicoAnalise = new ServicoAnalise();
+public class RegraTamanhoNomeJS implements RegraAnalise {
 
     @Override
-    public List<Ocorrencia> aplicar(ArquivoCodigo arquivo){
+    public List<Ocorrencia> aplicar(ArquivoCodigo arquivo) {
         List<Ocorrencia> ocorrencias = new ArrayList<>();
         String codigo = arquivo.getConteudo();
 
-        for(TipoDeclaracaoJS tipo: TipoDeclaracaoJS.values()){
-            Matcher matcher = servicoAnalise.obterFuncoes(codigo, tipo);
+        if (codigo == null) return ocorrencias;
 
-            while(matcher.find()){
+        for (TipoDeclaracaoJS tipo : TipoDeclaracaoJS.values()) {
 
-                if(matcher.groupCount() >= 1){
+            // CORREÇÃO: Chamamos direto do Utilitário (sem precisar do Serviço)
+            Matcher matcher = AnaliseUtil.obterFuncoes(codigo, tipo);
+
+            while (matcher.find()) {
+
+                if (matcher.groupCount() >= 1) {
                     String nome = matcher.group(1);
-                    int linha = codigo.substring(0, matcher.start()).split("\n").length;
-                    if(nome.length() > 10){
+
+
+                    int linha = AnaliseUtil.calcularLinha(codigo, matcher.start());
+
+                    if (nome.length() > 10) {
                         TipoProblema problema = TipoProblema.NOME_FUNCAO_LONGO;
-                        Ocorrencia ocorrencia = new Ocorrencia(problema.getCodigo(), arquivo, linha, problema.getDescricao(), matcher.group(1));
+
+
+                        Ocorrencia ocorrencia = new Ocorrencia(
+                                problema.getCodigo(),
+                                arquivo,
+                                linha,
+                                problema.getDescricao(),
+                                matcher.group(1)
+                        );
+
                         ocorrencias.add(ocorrencia);
                     }
                 }
             }
-
         }
-
         return ocorrencias;
     }
 }
