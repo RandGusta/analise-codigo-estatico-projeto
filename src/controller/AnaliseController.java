@@ -17,7 +17,7 @@ import java.nio.file.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@WebServlet("/analisar-arquivos")
+@WebServlet("/analisar-arquivo")
 public class AnaliseController extends HttpServlet {
 
     private final Gson gson = new Gson();
@@ -51,25 +51,21 @@ public class AnaliseController extends HttpServlet {
             if (Files.exists(arquivoPath)) {
                 conteudo = Files.readString(arquivoPath, StandardCharsets.UTF_8);
             } else {
-                // Se não encontrar, deixa conteudo vazio (ou registre/logue)
-                // você pode também pular o arquivo em vez de adicioná-lo
+                // Se não encontrar --> deixa conteudo vazio
             }
 
-
-            // construtor: ArquivoCodigo(String nome, TipoLinguagem tipoLinguagem, String conteudo, String caminho)
             ArquivoCodigo ac = new ArquivoCodigo(
                     nomeArquivo,
-                    TipoLinguagem.JAVASCRIPT, // ajuste o valor do enum se o seu for diferente
+                    TipoLinguagem.JAVASCRIPT,
                     conteudo
             );
             arquivosParaAnalisar.add(ac);
         }
 
-        // chama o serviço orquestrador que aplica todas as regras
+        // chama o serviço das regras
         ServicoAnaliseProjeto servicoProjeto = new ServicoAnaliseProjeto();
         Map<String, List<Ocorrencia>> resultados = servicoProjeto.analisarArquivos(arquivosParaAnalisar);
 
-        // salva na sessão para o /resultado-analise (ocorrencias.html irá buscar)
         HttpSession sessao = request.getSession();
         sessao.setAttribute("resultadoAnalise", resultados);
 

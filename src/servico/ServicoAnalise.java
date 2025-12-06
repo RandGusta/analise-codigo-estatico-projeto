@@ -22,10 +22,9 @@ public class ServicoAnalise {
         this.arquivoDAO = arquivoDAO;
 
         this.regras.add(new RegraTamanhoNomeJS());
-        this.regras.add(new RegraVerificacaoComentarioFuncaoJS());
+        this.regras.add(new RegraQuantidadeParametrosJS());
         this.regras.add(new RegraVerificacaoComentarioFuncaoJS());
         this.regras.add(new RegraComplexidadeCiclomaticaJS());
-
     }
 
 

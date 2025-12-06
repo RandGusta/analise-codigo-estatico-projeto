@@ -8,5 +8,6 @@ public interface ProjetoDAO {
     Projeto buscarProjetoPorId(Long id);
     List<Projeto> listarProjetos();
     void deletarProjetoPorId(Long id);
-    List<Projeto> buscarProjetoPorNome(String nome);
+    List<Projeto> buscarProjetoPorUsuario(Long idUsuario);
+
 }

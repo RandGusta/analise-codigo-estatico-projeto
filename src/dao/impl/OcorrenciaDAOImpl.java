@@ -4,15 +4,16 @@ import dao.OcorrenciaDAO;
 import modelo.Ocorrencia;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
 import javax.persistence.Query;
 import java.sql.Connection;
 import java.util.List;
 
 public class OcorrenciaDAOImpl implements OcorrenciaDAO {
-    private EntityManager em;
+    private EntityManager em = Persistence.createEntityManagerFactory("meuPC").createEntityManager();
 
-    public OcorrenciaDAOImpl(EntityManager em ){
-        this.em = em;
+    public OcorrenciaDAOImpl(){
+
     }
 
     @Override
@@ -20,6 +21,7 @@ public class OcorrenciaDAOImpl implements OcorrenciaDAO {
     em.getTransaction().begin();
     em.persist(ocorrencia);
     em.getTransaction().commit();
+    em.close();
     }
 
 
@@ -36,6 +38,7 @@ public class OcorrenciaDAOImpl implements OcorrenciaDAO {
             em.remove(ocorrencia);
         }
         em.getTransaction().commit();
+        em.close();
     }
 
     @Override

@@ -5,15 +5,16 @@ import dao.ArquivoCodigoDAO;
 import modelo.ArquivoCodigo;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
 public class ArquivoCodigoDAOImpl implements ArquivoCodigoDAO {
-    private EntityManager em;
+    private EntityManager em = Persistence.createEntityManagerFactory("meuPC").createEntityManager();
 
-    public ArquivoCodigoDAOImpl(EntityManager em){
-        this.em = em;
+    public ArquivoCodigoDAOImpl(){
+
     }
 
 
@@ -29,10 +30,12 @@ public class ArquivoCodigoDAOImpl implements ArquivoCodigoDAO {
           if(em.getTransaction().isActive())
           {
               em.getTransaction().rollback(); // apagar o lixo se der erro
-          }
-          throw new RuntimeException("erro ao salvar o usuario: " + e);
+            }
+            throw new RuntimeException("erro ao salvar o usuario: " + e);
 
-        }
+            }
+        em.close();
+
         }
 
     @Override
@@ -43,7 +46,10 @@ public class ArquivoCodigoDAOImpl implements ArquivoCodigoDAO {
             em.remove(arquivoCodigo);
         }
         em.getTransaction().commit();
+        em.close();
     }
+
+
 
     @Override
     public List<ArquivoCodigo> buscarArquivoPorNome(String nome){
@@ -53,6 +59,7 @@ public class ArquivoCodigoDAOImpl implements ArquivoCodigoDAO {
         return lista;
     }
 
+
     @Override
     public ArquivoCodigo buscarArquivoPorId(Long id){
         TypedQuery<ArquivoCodigo> query = em.createQuery("SELECT arq FROM ArquivoCodigo arq WHERE arq.id = :id", ArquivoCodigo.class);
@@ -60,6 +67,7 @@ public class ArquivoCodigoDAOImpl implements ArquivoCodigoDAO {
         ArquivoCodigo arquivoCodigo = query.getSingleResult();
         return arquivoCodigo;
     }
+
 
     @Override
     public List<ArquivoCodigo> listarArquivos(Long idProjeto){

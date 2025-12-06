@@ -4,17 +4,17 @@ import dao.UsuarioDAO;
 import modelo.Usuario;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Persistence;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.Queue;
 
 public class UsuarioDAOImpl implements UsuarioDAO {
-    private EntityManager em;
+    private EntityManager em = Persistence.createEntityManagerFactory("meuPC").createEntityManager();
 
 
-    public UsuarioDAOImpl(EntityManager em){
-        this.em = em;
+    public UsuarioDAOImpl(){
     }
 
     @Override
@@ -22,6 +22,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         em.getTransaction().begin();
         em.persist(usuario);
         em.getTransaction().commit();
+        em.close();
     }
 
     @Override
@@ -33,6 +34,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         }
 
         em.getTransaction().commit();
+        em.close();
     }
 
     @Override
@@ -54,8 +56,6 @@ public class UsuarioDAOImpl implements UsuarioDAO {
     @Override
     public Usuario buscarUsuarioPorEmail(String email){
         try {
-
-
             TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u WHERE u.email = :email", Usuario.class);
             query.setParameter("email", email);
             Usuario usuario = query.getSingleResult();
@@ -63,7 +63,7 @@ public class UsuarioDAOImpl implements UsuarioDAO {
         }
         catch (javax.persistence.NoResultException e)
         {
-         return null; // forçanod retornar null poruqe getSinleNode é dramatico
+         return null; // forçanod retornar null
         }
     }
 

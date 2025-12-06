@@ -14,7 +14,6 @@ import java.util.regex.Matcher;
 
 public class RegraComplexidadeCiclomaticaJS extends RegraAnaliseJS implements RegraAnalise {
 
-
     @Override
     public List<Ocorrencia> aplicar(ArquivoCodigo arquivoCodigo) {
         List<Ocorrencia> ocorrencias = new ArrayList<>();
@@ -23,15 +22,17 @@ public class RegraComplexidadeCiclomaticaJS extends RegraAnaliseJS implements Re
         if (conteudo == null) return ocorrencias;
 
         for (TipoDeclaracaoJS tipo : TipoDeclaracaoJS.values()) {
-
             Matcher matcherFuncao = AnaliseUtil.obterFuncoes(conteudo, tipo);
 
             while (matcherFuncao.find()) {
-
                 int linha = AnaliseUtil.calcularLinha(conteudo, matcherFuncao.start());
-
                 String nomeFuncao = matcherFuncao.group(1);
-                String corpoFuncao = matcherFuncao.group();
+
+                String corpoFuncao = extrairCorpoFuncao(conteudo, matcherFuncao.end());
+
+                if (corpoFuncao.isEmpty()) {
+                    continue; // Se não achou corpo --> pula
+                }
 
                 int complexidade = calcularComplexidade(corpoFuncao);
 
@@ -50,29 +51,52 @@ public class RegraComplexidadeCiclomaticaJS extends RegraAnaliseJS implements Re
                         tipoProblema.getCodigo(),
                         arquivoCodigo,
                         linha,
-                        tipoProblema.getDescricao() + " = " + complexidade,
+                        tipoProblema.getDescricao() + " (Nível: " + complexidade + ")",
                         nomeFuncao
                 );
                 ocorrencias.add(ocorrencia);
             }
         }
-
         return ocorrencias;
+    }
+
+    // procurando o bloco '{ }'
+    private String extrairCorpoFuncao(String codigo, int inicioBusca) {
+        int indiceAbreChave = codigo.indexOf("{", inicioBusca);
+        if (indiceAbreChave == -1) return "";
+
+        int contadorChaves = 0;
+        int indiceFechaChave = -1;
+
+        // contando '{' '}'
+        for (int i = indiceAbreChave; i < codigo.length(); i++) {
+            char c = codigo.charAt(i);
+            if (c == '{') {
+                contadorChaves++;
+            } else if (c == '}') {
+                contadorChaves--;
+                if (contadorChaves == 0) {
+                    indiceFechaChave = i;
+                    break;
+                }
+            }
+        }
+
+        if (indiceFechaChave != -1) {
+            return codigo.substring(indiceAbreChave, indiceFechaChave + 1);
+        }
+        return "";
     }
 
     private int calcularComplexidade(String codigoFuncao) {
         int complexidade = 1;
         for (EstruturaDecisaoJs ed : EstruturaDecisaoJs.values()) {
-
             Matcher matcher = AnaliseUtil.obterEstruturaDecisao(codigoFuncao, ed);
-
             while (matcher.find()) {
-                if (matcher.group(1) != null || matcher.group(2) != null) {
-                    complexidade++;
-                }
+                // Contando --> if, while, for, case, etc
+                complexidade++;
             }
         }
-
         return complexidade;
     }
 }

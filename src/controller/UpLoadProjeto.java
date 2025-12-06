@@ -25,13 +25,8 @@ import java.util.Scanner;
 @MultipartConfig // obrigatorio para receber arquivos
 public class UpLoadProjeto extends HttpServlet {
 
-
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("meuPC");
-        EntityManager em = emf.createEntityManager();
 
         try
         {
@@ -45,8 +40,8 @@ public class UpLoadProjeto extends HttpServlet {
                 return;
             }
 
-            ProjetoDAOImpl projetoDAO = new ProjetoDAOImpl(em);
-            ArquivoCodigoDAOImpl arquivoCodigoDAO = new ArquivoCodigoDAOImpl(em);
+            ProjetoDAOImpl projetoDAO = new ProjetoDAOImpl();
+            ArquivoCodigoDAOImpl arquivoCodigoDAO = new ArquivoCodigoDAOImpl();
             ServicoProjeto servicoProjeto = new ServicoProjeto(projetoDAO, arquivoCodigoDAO);
             ServicoArquivoCodigo servicoArquivoCodigo = new ServicoArquivoCodigo();
 
@@ -58,7 +53,8 @@ public class UpLoadProjeto extends HttpServlet {
 
             for (Part part : partes) {
 
-                if (nomeProjeto.equals(part.getName())) {
+
+                if ("nomeProjeto".equals(part.getName())) {
                     try(Scanner scanner = new Scanner(part.getInputStream())){
                         if(scanner.hasNext()){
                             nomeProjeto = scanner.useDelimiter("\\A").next();
@@ -75,8 +71,6 @@ public class UpLoadProjeto extends HttpServlet {
             }
 
 
-
-
             if (listarArquivos.isEmpty()) {
                 throw new RuntimeException("nenhum arquivo .js válido encontrado!!");
             }
@@ -88,14 +82,8 @@ public class UpLoadProjeto extends HttpServlet {
 
     } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            if (em != null && em.isOpen()) {
-                em.close();
-            }
-            if (emf != null && emf.isOpen()) {
-                emf.close();
-            }
         }
+
 
     }
 

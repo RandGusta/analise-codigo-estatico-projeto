@@ -22,7 +22,6 @@ public class RegraTamanhoNomeJS implements RegraAnalise {
 
         for (TipoDeclaracaoJS tipo : TipoDeclaracaoJS.values()) {
 
-            // CORREÇÃO: Chamamos direto do Utilitário (sem precisar do Serviço)
             Matcher matcher = AnaliseUtil.obterFuncoes(codigo, tipo);
 
             while (matcher.find()) {
@@ -30,12 +29,9 @@ public class RegraTamanhoNomeJS implements RegraAnalise {
                 if (matcher.groupCount() >= 1) {
                     String nome = matcher.group(1);
 
-
                     int linha = AnaliseUtil.calcularLinha(codigo, matcher.start());
-
                     if (nome.length() > 10) {
                         TipoProblema problema = TipoProblema.NOME_FUNCAO_LONGO;
-
 
                         Ocorrencia ocorrencia = new Ocorrencia(
                                 problema.getCodigo(),
@@ -44,7 +40,6 @@ public class RegraTamanhoNomeJS implements RegraAnalise {
                                 problema.getDescricao(),
                                 matcher.group(1)
                         );
-
                         ocorrencias.add(ocorrencia);
                     }
                 }

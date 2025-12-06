@@ -50,6 +50,8 @@ public class Ocorrencia {
         return tipoProblema;
     }
 
+    public String getNomeFuncao(){return nomeFuncao;}
+
     public String ocorrenciaCompleta(){
          return String.format("""
                 Nome do Arquivo:  %s

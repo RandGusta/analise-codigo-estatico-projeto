@@ -18,7 +18,7 @@ public class Usuario {
     private String nome;
     @Column(name ="email", nullable = false)
     private String email;
-    @Column(name="senha", nullable = false)
+    @Column(name="senha", nullable = false, unique = true)
     private String senha;
     @CreationTimestamp
     @Column(name = "data_cadastro",nullable = false, updatable = false)
@@ -62,7 +62,11 @@ public class Usuario {
 
     public String getSenha(){return senha;}
 
-        public String usuarioDescricao(){
+    public Long getId() {
+        return id;
+    }
+
+    public String usuarioDescricao(){
         String string =
                 String.format("Nome usuário: %s, \n Email cadastrado: %s, \n Data registro %s", this.nome, this.email, this.dataCadastro);
         return string;

@@ -21,10 +21,8 @@ public class LonginController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("meuPC");
-        EntityManager em = emf.createEntityManager();
         try{
-        UsuarioDAOImpl usuarioDAO = new UsuarioDAOImpl(em);
+        UsuarioDAOImpl usuarioDAO = new UsuarioDAOImpl();
         ServicoUsuario servicoUsuario = new ServicoUsuario(usuarioDAO);
 
         String email = request.getParameter("email");
@@ -35,7 +33,7 @@ public class LonginController extends HttpServlet {
         if(loginValidado != null){
             HttpSession session = request.getSession();
 
-            session.setAttribute("usuarioLogado", loginValidado);
+            session.setAttribute("usuarioLogado", loginValidado); // etiqueta do usuario da sessão
             response.sendRedirect("meus-projetos");
 
         } else {
@@ -44,14 +42,8 @@ public class LonginController extends HttpServlet {
         } catch (Exception e){
             e.printStackTrace();
             response.getWriter().write("erro: " + e.getMessage());
-        } finally {
-            if (em != null && em.isOpen()) {
-                em.close();
-            }
-            if (emf != null && emf.isOpen()) {
-                emf.close();
-            }
         }
+
     }
 
 }

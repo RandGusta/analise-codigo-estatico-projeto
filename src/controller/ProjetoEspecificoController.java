@@ -19,12 +19,9 @@ public class ProjetoEspecificoController extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("meuPC");
-        EntityManager em = emf.createEntityManager();
-
         try{
-            ProjetoDAOImpl projetoDAO = new ProjetoDAOImpl(em);
-            ArquivoCodigoDAOImpl arquivoCodigoDAO = new ArquivoCodigoDAOImpl(em);
+            ProjetoDAOImpl projetoDAO = new ProjetoDAOImpl();
+            ArquivoCodigoDAOImpl arquivoCodigoDAO = new ArquivoCodigoDAOImpl();
             ServicoProjeto servicoProjeto = new ServicoProjeto(projetoDAO, arquivoCodigoDAO);
 
             String id = request.getParameter("id");
@@ -41,14 +38,8 @@ public class ProjetoEspecificoController extends HttpServlet {
         } catch (Exception e){
             e.printStackTrace();
             response.sendRedirect("meus-projetos");
-        } finally {
-            if (em != null && em.isOpen()) {
-                em.close();
-            }
-            if (emf != null && emf.isOpen()) {
-                emf.close();
-            }
         }
+
     }
 
 }

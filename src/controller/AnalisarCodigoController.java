@@ -21,15 +21,8 @@ public class AnalisarCodigoController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        EntityManagerFactory emf = null;
-        EntityManager em = null;
-
         try {
-            emf = Persistence.createEntityManagerFactory("meuPC");
-            em = emf.createEntityManager();
-
-            ArquivoCodigoDAOImpl arquivoDAO = new ArquivoCodigoDAOImpl(em);
+            ArquivoCodigoDAOImpl arquivoDAO = new ArquivoCodigoDAOImpl();
             ServicoAnalise servicoAnalise = new ServicoAnalise(arquivoDAO);
 
 
@@ -64,10 +57,6 @@ public class AnalisarCodigoController extends HttpServlet {
             if (idProjeto != null) {
                 response.getWriter().write("<a href='projeto-especifico?id=" + idProjeto + "'>Voltar ao Projeto</a>");
             }
-        } finally {
-
-            if (em != null && em.isOpen()) em.close();
-            if (emf != null && emf.isOpen()) emf.close();
         }
     }
 }

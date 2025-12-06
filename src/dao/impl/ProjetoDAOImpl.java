@@ -3,19 +3,16 @@ package dao.impl;
 import dao.ProjetoDAO;
 import modelo.Projeto;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PostLoad;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
+import javax.persistence.*;
 import java.util.List;
 import java.util.Queue;
 
 public class ProjetoDAOImpl implements ProjetoDAO {
-    private EntityManager em;
+    private EntityManager em = Persistence.createEntityManagerFactory("meuPC").createEntityManager();
 
 
-    public ProjetoDAOImpl(EntityManager em){
-        this.em = em;
+    public ProjetoDAOImpl(){
+
     }
 
 
@@ -24,6 +21,7 @@ public class ProjetoDAOImpl implements ProjetoDAO {
         em.getTransaction().begin();
         em.persist(projeto);
         em.getTransaction().commit();
+        em.close();
     }
 
     @Override
@@ -34,7 +32,7 @@ public class ProjetoDAOImpl implements ProjetoDAO {
             em.remove(projeto);
         }
         em.getTransaction().commit();
-
+        em.close();
     }
 
     @Override
@@ -53,10 +51,13 @@ public class ProjetoDAOImpl implements ProjetoDAO {
     }
 
 
+
+
+
     @Override
-    public List<Projeto> buscarProjetoPorNome(String nome){
-        Query query = em.createQuery("SELECT p FROM Projeto p WHERE p.nome LIKE :nome");
-        query.setParameter("nome", "%"+nome+"%");
+    public List<Projeto> buscarProjetoPorUsuario(Long id){
+        Query query = em.createQuery("SELECT p FROM Projeto p WHERE p.usuario.id LIKE :id");
+        query.setParameter("id", id);
         List<Projeto> lista = query.getResultList();
         return lista;
     }

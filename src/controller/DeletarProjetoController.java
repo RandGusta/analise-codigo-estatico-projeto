@@ -17,11 +17,9 @@ public class DeletarProjetoController extends HttpServlet{
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("meuPC");
-        EntityManager em = emf.createEntityManager();
         try{
-            ProjetoDAOImpl projetoDAO = new ProjetoDAOImpl(em);
-            ArquivoCodigoDAOImpl arquivoCodigoDAO = new ArquivoCodigoDAOImpl(em);
+            ProjetoDAOImpl projetoDAO = new ProjetoDAOImpl();
+            ArquivoCodigoDAOImpl arquivoCodigoDAO = new ArquivoCodigoDAOImpl();
             ServicoProjeto servicoProjeto = new ServicoProjeto(projetoDAO, arquivoCodigoDAO);
 
             String idString = request.getParameter("id");
@@ -36,13 +34,6 @@ public class DeletarProjetoController extends HttpServlet{
         } catch (Exception e){
             e.printStackTrace();
             response.getWriter().write("erro ao deletar : " + e.getMessage());
-        } finally {
-            if (em != null && em.isOpen()) {
-                em.close();
-            }
-            if (emf != null && emf.isOpen()) {
-                emf.close();
-            }
         }
 
     }

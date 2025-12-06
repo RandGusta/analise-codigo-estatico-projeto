@@ -40,8 +40,8 @@ public class ServicoProjeto {      // orquestrador para salvar o arquivoCodigo j
     }
 
 
-    public List<Projeto> listarProjeto(){
-        return projetoDAO.listarProjetos();
+    public List<Projeto> listarProjetoPorUsuario(Long id){
+        return projetoDAO.buscarProjetoPorUsuario(id);
     }
 
     public void deletarProjeto(Long id){
